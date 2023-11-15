@@ -1,31 +1,46 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twitter_clone_client/twitter_clone_client.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
+import 'package:twitter_clone_flutter/blocs/feed/feed_bloc.dart';
 import 'package:twitter_clone_flutter/feeds_page.dart';
+import 'package:twitter_clone_flutter/repositories/post_repository.dart';
 
 var client = Client('http://localhost:8080/')
   ..connectivityMonitor = FlutterConnectivityMonitor();
 
 void main() {
-  runApp(const MyApp());
+  final postRepository = PostRepository(client: client);
+  runApp(MyApp(postRepository: postRepository,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key, required this.postRepository});
+
+  final PostRepository postRepository;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Serverpod Demo',
-      theme: ThemeData.dark(
-        useMaterial3: true,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => postRepository),],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => FeedBloc(postRepository: postRepository)..add(const FeedLoadEvent())),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Serverpod Demo',
+          theme: ThemeData.dark(
+            useMaterial3: true,
+          ),
+          initialRoute: "/",
+          routes: <String, WidgetBuilder>{
+            '/': (BuildContext context) => const FeedsPage(),
+            //'/login': (BuildContext context) => const LoginPage(),
+          }
+        ),
       ),
-      initialRoute: "/",
-      routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => const FeedsPage(),
-        //'/login': (BuildContext context) => const LoginPage(),
-      }
     );
   }
 }
