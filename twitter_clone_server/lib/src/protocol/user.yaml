@@ -9,3 +9,5 @@ fields:
   bgPicUrl: String
   followerCount: int
   followingCount: int
+
+
