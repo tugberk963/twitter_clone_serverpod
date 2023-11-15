@@ -1,7 +1,7 @@
 import 'package:twitter_clone_client/twitter_clone_client.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
-import 'package:twitter_clone_flutter/post_dialog.dart';
+import 'package:twitter_clone_flutter/feeds_page.dart';
 
 var client = Client('http://localhost:8080/')
   ..connectivityMonitor = FlutterConnectivityMonitor();
@@ -16,15 +16,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Serverpod Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+      theme: ThemeData.dark(
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Serverpod Example'),
+      initialRoute: "/",
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => const FeedsPage(),
+        //'/login': (BuildContext context) => const LoginPage(),
+      }
     );
   }
 }
 
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -117,3 +123,4 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
