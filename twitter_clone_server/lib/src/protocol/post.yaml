@@ -1,0 +1,11 @@
+class: Post
+table: posts
+fields:
+  caption: String
+  imgUrl: String
+  type: PostType
+  audience: PostAudienceSettings
+  reply: PostReplySettings
+  userId: int
+  username: String
+  profilePicUrl: String
