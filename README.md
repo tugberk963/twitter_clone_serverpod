@@ -24,3 +24,9 @@ Flutter Twitter Clone with BLoC pattern using Serverpod & Docker, PostgreSQL
 General UI 
 
 ![](https://github.com/tugberk963/twitter_clone_serverpod/blob/tugberk/twitter_clone_flutter/twitterclone.gif)
+
+TO - DO
+-> User Profile
+-> User Handles
+-> Like Animations
+..
